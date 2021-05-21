@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 /* global require process */
 
-const sh = require("shelljs");
-const fs = require("fs");
+const sh = require('shelljs');
+const fs = require('fs');
 
-const logs = sh.exec("git log -50").stdout.split("\n");
+const logs = sh.exec('git log -50').stdout.split('\n');
 const output = [];
 
 const normalize = (line) =>
-  line.replace(/\[c\]/, "").replace(/\[C\]/, "").trim().replace(/ {2}/g, " ");
+  line.replace(/\[c\]/, '').replace(/\[C\]/, '').trim().replace(/ {2}/g, ' ');
 
 const file = sh
-  .exec("ls")
-  .stdout.split("\n")
+  .exec('ls')
+  .stdout.split('\n')
   .filter((itm) =>
     itm.match(/.*[C,c][H,h][A,a][N,n][G,g][E,e].*[L,l][O,o][G,g].*\.y.*ml/)
   )
   .pop();
 const changeLog = sh.exec(`cat ${file}`).stdout;
-const changeLogLines = changeLog.split("\n");
+const changeLogLines = changeLog.split('\n');
 
 logs.forEach((log) => {
   const changeMatch = log.match(/\[c\]/) || log.match(/\[C\]/);
@@ -32,7 +32,7 @@ logs.forEach((log) => {
   }
 });
 
-if (changeLogLines[0].indexOf("master:") !== -1) {
+if (changeLogLines[0].indexOf('master:') !== -1) {
   changeLogLines.shift();
 }
 
@@ -42,9 +42,9 @@ output.forEach((o) => {
   }
 });
 
-changeLogLines.unshift("master:");
+changeLogLines.unshift('master:');
 
-const update = changeLogLines.join("\n");
+const update = changeLogLines.join('\n');
 const changed = update !== changeLog;
 
 if (changed) {
@@ -57,7 +57,7 @@ if (changed) {
       throw err;
     }
 
-    console.info("\nsuccess update change log");
+    console.info('\nsuccess update change log');
     /* eslint-enable */
   });
 }

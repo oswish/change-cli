@@ -1,14 +1,16 @@
 {
   "name": "change-cli",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A command line interface to manage your change log yaml file.",
   "scripts": {
     "start": "node ./change-cli",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brian Swisher",
-  "bin": "./bin/prettydiff",
-  "main": "bin/change-cli",
+  "bin": {
+    "change-cli": "./change-cli.js"
+  },
+  "main": "change-cli.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/oswish/change-cli.git"
