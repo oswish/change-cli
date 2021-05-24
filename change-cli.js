@@ -15,7 +15,12 @@ const logs = sh.exec("git log -50").stdout.split("\n");
 const output = [];
 
 const normalize = (line) =>
-  line.replace(/\[c\]/, "").replace(/\[C\]/, "").trim().replace(/ {2}/g, " ");
+  line
+    .replace(/\[c\]/, "")
+    .replace(/\[C\]/, "")
+    .trim()
+    .replace(/ {2}/g, " ")
+    .replace(/'/g, "`");
 
 const file = sh
   .exec("ls")
