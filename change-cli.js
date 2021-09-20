@@ -49,7 +49,7 @@ if (changeLogLines[0].indexOf("master:") !== -1) {
 }
 
 output.forEach((o) => {
-  if (changeLog.indexOf(o) === -1) {
+  if (changeLog.indexOf(o.substring(0, 39)) === -1) {
     changeLogLines.unshift(`  - '${o}'`);
   }
 });
