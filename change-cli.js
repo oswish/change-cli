@@ -33,9 +33,10 @@ const changeLog = sh.exec(`cat ${file}`).stdout;
 const changeLogLines = changeLog.split("\n");
 
 logs.forEach((log) => {
+  const isSquashedLog = log.charAt(0) === '*';
   const changeMatch = log.match(/\[c\]/) || log.match(/\[C\]/);
 
-  if (changeMatch) {
+  if (changeMatch && !isSquashedLog) {
     const normalizedLog = normalize(log);
 
     if (output.indexOf(normalizedLog) === -1) {
