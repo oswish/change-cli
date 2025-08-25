@@ -33,13 +33,19 @@ const changeLog = sh.exec(`cat ${file}`).stdout;
 const changeLogLines = changeLog.split("\n");
 
 logs.forEach((log) => {
-  const isSquashedLog = log.charAt(0) === '*';
   const changeMatch = log.match(/\[c\]/) || log.match(/\[C\]/);
 
-  if (changeMatch && !isSquashedLog) {
+  if (changeMatch) {
     const normalizedLog = normalize(log);
+    const isSquashedLog = normalizedLog.charAt(0) === '*';
 
-    if (output.indexOf(normalizedLog) === -1) {
+    if (isSquashedLog) {
+      /* eslint-disable no-console */
+      console.info(`[squashed commit] ${normalizedLog}`);
+      /* eslint-enable */
+    }
+
+    if (output.indexOf(normalizedLog) === -1 && !isSquashedLog) {
       output.push(normalize(log));
     }
   }
